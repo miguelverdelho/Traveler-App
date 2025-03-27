@@ -1,8 +1,0 @@
-<div class="overlay" *ngIf="isVisible" (click)="onClose.emit()">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <img [src]="photo" alt="Travel photo" />
-      <h3>{{ description }}</h3>
-      <button class="close-btn" (click)="onClose.emit()">×</button>
-    </div>
-  </div>
-  

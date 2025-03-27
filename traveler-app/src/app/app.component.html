@@ -2,8 +2,9 @@
 
 <app-photo-modal
   *ngIf="showModal"
-  [photo]="selectedPhoto"
+  [photos]="selectedPhotos"
   [description]="selectedDescription"
+  [link]="selectedLink"
   [isVisible]="showModal"
   (onClose)="closeModal()">
 </app-photo-modal>

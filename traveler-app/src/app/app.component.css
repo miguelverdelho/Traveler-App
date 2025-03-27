@@ -1,5 +1,13 @@
-#map {
+html, body {
+    margin: 0;
+    padding: 0;
     height: 100%;
+    overflow: hidden; /* prevent scrollbars */
+  }
+
+#map {
+    width: 100%;
+    height: 90vh;
   }
 
   /* Make the popup big and centered */
