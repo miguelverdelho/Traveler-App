@@ -1,32 +1,115 @@
+/* Fullscreen dark overlay */
 .overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
   }
   
+  /* Fixed size modal window */
   .modal {
-    background: white;
+    width: 60vw;
+    height: 80vh;
+    background: #f0f0f0; /* light grey */
     padding: 1rem;
-    border-radius: 10px;
-    max-width: 80vw;
-    max-height: 80vh;
-    overflow: auto;
+    border-radius: 12px;
     position: relative;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+    gap: 0.5rem;
   }
   
-  .modal img {
+  
+  /* Main image container */
+  .image-area img {
+    max-height: 80%;
+    max-width: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  
+  /* Displayed image */
+  .image-area img {
     max-width: 100%;
-    max-height: 70vh;
+    max-height: 100%;
+    object-fit: contain;
     border-radius: 8px;
   }
   
+
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    background: #f0f0f0;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.95;
+    /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.15); */
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .nav:hover {
+    background: #e0e0e0;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+  }
+  
+  
+  .nav.prev { left: 0; }
+  .nav.next { right: 0; }
+  
+  /* Description text */
+  .description {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  /* Thumbnail navigation */
+  .thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 0.5rem;
+    overflow-x: auto;
+  }
+  
+  .thumbnails img {
+    height: 50px;
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* subtle shadow */
+  }
+  
+  .thumbnails img.active,
+  .thumbnails img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    border: 2px solid #0077ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* stronger on hover/active */
+  }
+  
+  /* Close button */
   .close-btn {
     position: absolute;
     top: 10px;
@@ -35,5 +118,53 @@
     background: none;
     border: none;
     cursor: pointer;
+    color: #444;
+    z-index: 1001;
+  }
+  
+  /* Animation for modal entrance */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  
+
+  .image-area {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-area img {
+    max-height: 80%;
+    max-width: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* ✨ box shadow */
+    transition: all 0.3s ease-in-out;
+  }
+
+
+  .external-link {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  
+  .external-link a {
+    display: inline-block;
+    background-color: #0077ff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .external-link a:hover {
+    background-color: #005ecc;
   }
   

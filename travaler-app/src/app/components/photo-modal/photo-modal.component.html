@@ -1,8 +1,31 @@
 <div class="overlay" *ngIf="isVisible" (click)="onClose.emit()">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <img [src]="photo" alt="Travel photo" />
-      <h3>{{ description }}</h3>
-      <button class="close-btn" (click)="onClose.emit()">×</button>
+  <div class="modal" (click)="$event.stopPropagation()">
+    <div class="image-area">
+      <button class="nav prev" (click)="prev()">&#10094;</button>
+
+      <img [src]="currentPhoto" alt="Photo" />
+
+      <button class="nav next" (click)="next()">&#10095;</button>
     </div>
+
+    <div class="description" [innerHTML]="description"></div>
+
+    <div class="thumbnails">
+      <img
+        *ngFor="let photo of photos; let i = index"
+        [src]="photo"
+        [class.active]="i === currentIndex"
+        (click)="goTo(i)"
+      />
+    </div>
+
+    <div class="external-link" *ngIf="link">
+        <a [href]="link" target="_blank" rel="noopener">
+          🌐 Cadernos de Viagem
+        </a>
+      </div>
+      
+
+    <button class="close-btn" (click)="onClose.emit()">×</button>
   </div>
-  
+</div>

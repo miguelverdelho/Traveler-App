@@ -1,15 +1,24 @@
 [
     {
-        "lat": 48.8566,
-        "lng": 2.3522,
-        "description": "Eiffel Tower - Paris",
-        "photo": "assets/photos/eiffel.jpg"
+      "lat": 48.8566,
+      "lng": 2.3522,
+      "description": "Eiffel Tower at sunset. What a view!",
+      "link":"https://cadernosdeviagem.blogspot.com/2011/11/samoa-o-pacifico-diferente.html",
+      "photos": [
+        "assets/photos/eiffel1.jpg",
+        "assets/photos/eiffel2.jpg",
+        "assets/photos/eiffel3.jpg"
+      ]
     },
     {
-        "lat": 35.6895,
-        "lng": 139.6917,
-        "description": "Tokyo - Cherry Blossoms",
-        "photo": "assets/photos/tokyo.jpg"
-    }
-]
+        "lat": -13.759,
+        "lng": -172.1046,
+        "description": "Samoa, o Pacífico diferente",
+        "link":"https://cadernosdeviagem.blogspot.com/2011/11/samoa-o-pacifico-diferente.html",
+        "photos": [
+          "assets/photos/samoa1.JPG",
+          "assets/photos/samoa2.JPG"
+        ]
+      }
+  ]
   
