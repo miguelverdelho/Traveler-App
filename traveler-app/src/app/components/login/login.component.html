@@ -1,0 +1,12 @@
+<div class="login-wrapper">
+    <h2>🔒 Enter Password</h2>
+    <input
+      type="password"
+      [(ngModel)]="password"
+      (keyup.enter)="checkPassword()"
+      placeholder="Password" />
+    <button (click)="checkPassword()">Unlock</button>
+  
+    <div class="error" *ngIf="error">Incorrect password. Try again.</div>
+  </div>
+  

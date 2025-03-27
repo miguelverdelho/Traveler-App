@@ -3,6 +3,7 @@ import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PhotoModalComponent } from './components/photo-modal/photo-modal.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 interface TravelSpot {
@@ -24,7 +25,7 @@ const redPinIcon = L.icon({
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, PhotoModalComponent],
+  imports: [CommonModule, PhotoModalComponent,LoginComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -35,12 +36,21 @@ export class AppComponent implements OnInit {
   selectedLink: string = '';
   showModal: boolean = false;
   selectedPhotos: string[] = [];
-  
+  isAuthenticated = false;
+
+  onLoginSuccess() {
+    this.isAuthenticated = true;
+     // Defer initMap until DOM is updated
+    setTimeout(() => {
+      this.initMap();
+      this.loadSpots();
+    });
+  }
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.initMap();
-    this.loadSpots();
+    
   }
 
   private initMap(): void {
@@ -63,7 +73,7 @@ export class AppComponent implements OnInit {
       zoomOffset: -1
     }).addTo(this.map);
   }
-
+  
 
   closeModal() {
     this.showModal = false;
