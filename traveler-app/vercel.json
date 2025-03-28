@@ -1,4 +1,11 @@
 {
     "buildCommand": "npm run build -- --configuration production",
-    "outputDirectory": "dist/traveler-app"
+    "outputDirectory": "dist/traveler-app",
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
+    ]
   }
+  
