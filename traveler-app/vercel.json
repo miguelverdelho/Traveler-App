@@ -1,6 +1,5 @@
 {
     "buildCommand": "npm run build -- --configuration production",
-    "outputDirectory": "dist",
     "rewrites": [
       {
         "source": "/(.*)",
