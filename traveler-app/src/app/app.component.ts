@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 interface TravelSpot {
   lat: number;
   lng: number;
+  title: string;
   description: string;
   link?: string;
   photos: string[];
@@ -68,7 +69,6 @@ export class AppComponent implements OnInit {
     });
 
     L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=bPMFb9L0UDBUeWHd3aj9', {
-      attribution: '&copy; MapTiler & OpenStreetMap contributors',
       tileSize: 512,
       zoomOffset: -1
     }).addTo(this.map);
@@ -80,18 +80,20 @@ export class AppComponent implements OnInit {
   }
 
   private loadSpots(): void {
-    this.http.get<TravelSpot[]>('assets/map-data.json').subscribe(spots => {
+    this.http.get<any>('https://traveler-cms.vercel.app/api/travel-spots').subscribe(response => {
+      const spots: TravelSpot[] = response.docs;
+  
       spots.forEach(spot => {
         L.marker([spot.lat, spot.lng], { icon: redPinIcon })
-        .addTo(this.map)     
-        .on('click', () => {
-          this.selectedPhotos = spot.photos;
-          this.selectedDescription = spot.description;
-          this.selectedLink = spot.link || '';
-          this.showModal = true;
-
-        });
+          .addTo(this.map)
+          .on('click', () => {
+            this.selectedPhotos = spot.photos || [];
+            this.selectedDescription = spot.description;
+            this.selectedLink = spot.link || '';
+            this.showModal = true;
+          });
       });
     });
   }
+  
 }
