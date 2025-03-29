@@ -4,13 +4,14 @@
   <div id="map" style="height: 100vh; width: 100%;"></div>
   
   <app-photo-modal
-    *ngIf="showModal"
-    [photos]="selectedPhotos"
-    [description]="selectedDescription"
-    [link]="selectedLink"
-    [isVisible]="showModal"
-    (onClose)="closeModal()">
-  </app-photo-modal>
+  [photos]="selectedPhotos"
+  [title]="selectedTitle"
+  [description]="selectedDescription"
+  [date]="selectedDate"
+  [link]="selectedLink"
+  [isVisible]="showModal"
+  (onClose)="closeModal()"
+></app-photo-modal>
 </div>
 
 

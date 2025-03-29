@@ -12,10 +12,10 @@ export class PhotoModalComponent {
   @Input() photos: string[] = [];
   @Input() description: string = '';
   @Input() link: string = '';
-  @Input() isVisible: boolean = false;
-  @Output() onClose = new EventEmitter<void>();
   @Input() title!: string;
   @Input() date!: string;
+  @Input() isVisible: boolean = false;
+  @Output() onClose = new EventEmitter<void>();
 
 
   currentIndex: number = 0;

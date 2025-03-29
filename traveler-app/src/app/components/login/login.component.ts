@@ -20,7 +20,6 @@ export class LoginComponent {
   @Output() loginSuccess = new EventEmitter<void>();
 
   checkPassword() {
-    console.log(this.password);
     const enteredHash = sha256(this.password).toString();
     if (enteredHash === this.expectedHash) {
       this.loginSuccess.emit();

@@ -13,9 +13,7 @@ interface TravelSpot {
   description: string;
   link?: string;
   date: string; // or `Date` depending on how you want to format it
-  photos: {
-    url: string;
-  }[];
+  photos: string[];
 }
 
 
@@ -39,9 +37,8 @@ export class AppComponent implements OnInit {
   selectedDescription: string = '';
   selectedLink: string = '';
   showModal: boolean = false;
-  selectedPhotos: {
-    url: string;
-  }[]= [];
+  selectedPhotos: string[] = [];
+
   isAuthenticated = false;
   selectedTitle: string = '';
   selectedDate: string = '';
@@ -91,16 +88,24 @@ export class AppComponent implements OnInit {
       const spots: TravelSpot[] = response.docs;
   
       spots.forEach(spot => {
+        
+        console.log('Full spot object:', spot);
+
         L.marker([spot.lat, spot.lng], { icon: redPinIcon })
           .addTo(this.map)
           .on('click', () => {
-            this.selectedPhotos = spot.photos;
+            this.selectedPhotos = spot.photos || [];            
+            this.selectedTitle = spot.title;
             this.selectedDescription = spot.description;
+            this.selectedDate = spot.date || 'No date provided';
             this.selectedLink = spot.link || '';
             this.showModal = true;
-            this.selectedTitle = spot.title;
-            this.selectedDate = spot.date;
-
+            
+            console.log({
+              photos: this.selectedPhotos,
+              title: this.selectedTitle,
+              date: this.selectedDate
+            });
           });
       });
     });

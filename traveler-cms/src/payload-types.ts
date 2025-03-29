@@ -161,6 +161,7 @@ export interface TravelSpot {
   link?: string | null;
   lat: number;
   lng: number;
+  date: string;
   photos?: string[] | null;
   updatedAt: string;
   createdAt: string;
@@ -268,6 +269,7 @@ export interface TravelSpotsSelect<T extends boolean = true> {
   link?: T;
   lat?: T;
   lng?: T;
+  date?: T;
   photos?: T;
   updatedAt?: T;
   createdAt?: T;
