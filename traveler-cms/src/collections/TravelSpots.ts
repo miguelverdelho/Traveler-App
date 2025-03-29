@@ -34,6 +34,16 @@ export const TravelSpots: CollectionConfig = {
       required: true,
     },
     {
+      name: 'date',
+      type: 'date',
+      required: true,
+      admin: {
+        date: {
+          pickerAppearance: 'dayOnly', // optional: just a calendar picker
+        },
+      },
+    },
+    {
       name: 'photos',
       type: 'text',
       required: false,

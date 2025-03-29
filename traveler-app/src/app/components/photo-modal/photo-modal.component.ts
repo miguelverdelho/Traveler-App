@@ -14,6 +14,9 @@ export class PhotoModalComponent {
   @Input() link: string = '';
   @Input() isVisible: boolean = false;
   @Output() onClose = new EventEmitter<void>();
+  @Input() title!: string;
+  @Input() date!: string;
+
 
   currentIndex: number = 0;
 

@@ -12,7 +12,10 @@ interface TravelSpot {
   title: string;
   description: string;
   link?: string;
-  photos: string[];
+  date: string; // or `Date` depending on how you want to format it
+  photos: {
+    url: string;
+  }[];
 }
 
 
@@ -36,8 +39,12 @@ export class AppComponent implements OnInit {
   selectedDescription: string = '';
   selectedLink: string = '';
   showModal: boolean = false;
-  selectedPhotos: string[] = [];
+  selectedPhotos: {
+    url: string;
+  }[]= [];
   isAuthenticated = false;
+  selectedTitle: string = '';
+  selectedDate: string = '';
 
   onLoginSuccess() {
     this.isAuthenticated = true;
@@ -87,10 +94,13 @@ export class AppComponent implements OnInit {
         L.marker([spot.lat, spot.lng], { icon: redPinIcon })
           .addTo(this.map)
           .on('click', () => {
-            this.selectedPhotos = spot.photos || [];
+            this.selectedPhotos = spot.photos;
             this.selectedDescription = spot.description;
             this.selectedLink = spot.link || '';
             this.showModal = true;
+            this.selectedTitle = spot.title;
+            this.selectedDate = spot.date;
+
           });
       });
     });
