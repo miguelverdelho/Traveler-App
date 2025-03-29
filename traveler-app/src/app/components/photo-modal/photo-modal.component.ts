@@ -20,6 +20,7 @@ export class PhotoModalComponent {
 
   currentIndex: number = 0;
 
+
   get currentPhoto(): string {
     return this.photos[this.currentIndex];
   }

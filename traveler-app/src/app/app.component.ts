@@ -63,24 +63,28 @@ export class AppComponent implements OnInit {
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [20, 0],
-      zoom: 2,
-      maxZoom: 25,             // optional: set a zoom ceiling
-      minZoom: 2.5,             // optional: prevent over-zoom out
-      maxBoundsViscosity: 1.0, // strong edge resistance
-      worldCopyJump: false,    // important: don't wrap
+      maxZoom: 18,
+      minZoom: 2,
+      maxBoundsViscosity: 1.0,
+      worldCopyJump: false,
       maxBounds: [
         [-85, -180],
         [85, 180]
       ]
     });
-
+  
     L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=bPMFb9L0UDBUeWHd3aj9', {
       tileSize: 512,
       zoomOffset: -1
     }).addTo(this.map);
-  }
   
+    const europeBounds: L.LatLngBoundsExpression = [
+      [34, -11],  // Southwest (Canary Islands / Morocco area)
+      [60, 30]    // Northeast (Western Russia area)
+    ];
+    
+    this.map.fitBounds(europeBounds);
+  }
 
   closeModal() {
     this.showModal = false;
@@ -94,6 +98,7 @@ export class AppComponent implements OnInit {
         
         L.marker([spot.lat, spot.lng], { icon: redPinIcon })
           .addTo(this.map)
+          .bindTooltip(spot.title, { permanent: false, direction: 'top' })
           .on('click', () => {
             this.selectedPhotos = spot.photos || [];            
             this.selectedTitle = spot.title;

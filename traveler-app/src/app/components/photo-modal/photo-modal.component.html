@@ -9,13 +9,24 @@
 
     <!-- Image area with navigation -->
     <div class="image-area">
-      <button class="nav prev" (click)="prev()">&#10094;</button>
+      <button
+        class="nav prev"
+        *ngIf="photos.length > 1"
+        (click)="prev()"
+      >
+        &#10094;
+      </button>
+    
       <img [src]="currentPhoto" alt="Photo" />
-      <button class="nav next" (click)="next()">&#10095;</button>
+    
+      <button
+        class="nav next"
+        *ngIf="photos.length > 1"
+        (click)="next()"
+      >
+        &#10095;
+      </button>
     </div>
-
-    <div class="description" [innerHTML]="description"></div>
-
     <div class="thumbnails">
       <img
         *ngFor="let photo of photos; let i = index"
@@ -24,7 +35,15 @@
         (click)="goTo(i)"
       />
     </div>
-
+    
+    
+    <div
+      class="description"
+      [class.collapsed]="true"
+    >
+      <div [innerHTML]="description"></div>
+    </div>
+    
     <div class="external-link" *ngIf="link">
       <a [href]="link" target="_blank" rel="noopener">
         🌐 Cadernos de Viagem
