@@ -55,7 +55,10 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    
+    //remove when login active
+
+    this.initMap();
+    this.loadSpots();
   }
 
   private initMap(): void {
@@ -84,13 +87,11 @@ export class AppComponent implements OnInit {
   }
 
   private loadSpots(): void {
-    this.http.get<any>('https://traveler-cms.vercel.app/api/travel-spots').subscribe(response => {
+    this.http.get<any>('https://traveler-cms.vercel.app/api/travel-spots?limit=1000').subscribe(response => {
       const spots: TravelSpot[] = response.docs;
   
       spots.forEach(spot => {
         
-        console.log('Full spot object:', spot);
-
         L.marker([spot.lat, spot.lng], { icon: redPinIcon })
           .addTo(this.map)
           .on('click', () => {
@@ -101,11 +102,6 @@ export class AppComponent implements OnInit {
             this.selectedLink = spot.link || '';
             this.showModal = true;
             
-            console.log({
-              photos: this.selectedPhotos,
-              title: this.selectedTitle,
-              date: this.selectedDate
-            });
           });
       });
     });

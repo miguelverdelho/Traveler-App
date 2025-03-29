@@ -1,6 +1,6 @@
-<app-login *ngIf="!isAuthenticated" (loginSuccess)="onLoginSuccess()"></app-login>
+<!-- <app-login *ngIf="!isAuthenticated" (loginSuccess)="onLoginSuccess()"></app-login> -->
 
-<div *ngIf="isAuthenticated">
+<!-- <div *ngIf="isAuthenticated"> -->
   <div id="map" style="height: 100vh; width: 100%;"></div>
   
   <app-photo-modal
@@ -12,6 +12,6 @@
   [isVisible]="showModal"
   (onClose)="closeModal()"
 ></app-photo-modal>
-</div>
+<!-- </div> -->
 
 
