@@ -17,7 +17,14 @@
         &#10094;
       </button>
     
-      <img [src]="currentPhoto" alt="Photo" />
+      <a 
+        href="{{currentPhoto}}" 
+        data-pswp-width="1600" 
+        data-pswp-height="1200" 
+        (click)="openGallery($event)"
+      >
+        <img [src]="currentPhoto" alt="Photo" />
+      </a>
     
       <button
         class="nav next"
