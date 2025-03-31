@@ -4,8 +4,9 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  height: 100dvh;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,16 +25,17 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.3s ease-out;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  animation: fadeIn 0.5s ease-out;
   gap: 1rem;
+  max-width: 900px;
 }
 
 .image-area {
   position: relative;
   width: 100%;
   max-width: 700px;
-  height: 500px; /* Fixes the gallery height */
+  height: 500px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -41,7 +43,6 @@
   overflow: hidden;
 }
 
-/* Target the <a> wrapper around the image */
 .image-area a {
   display: flex;
   align-items: center;
@@ -50,7 +51,6 @@
   height: 100%;
 }
 
-/* Image itself */
 .image-area img {
   max-width: 100%;
   max-height: 100%;
@@ -64,6 +64,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 200px;
 }
 
 .image-loader {
@@ -81,7 +82,6 @@
   opacity: 0.8;
 }
 
-
 img.loaded {
   transition: opacity 0.3s ease-in;
   opacity: 1;
@@ -91,9 +91,6 @@ img:not(.loaded) {
   opacity: 0;
 }
 
-
-
-/* Navigation buttons */
 .nav {
   position: absolute;
   top: 50%;
@@ -122,17 +119,18 @@ img:not(.loaded) {
   right: -15px;
 }
 
-/* Description text */
 .description {
   text-align: center;
   font-size: 0.8rem;
-  width:70%;
+  width: 70%;
   align-self: center;
   color: #333;
   position: relative;
   overflow: hidden;
   transition: max-height 0.3s ease;
-  max-height: 500px; /* Large enough when expanded */
+  max-height: 500px;
+  line-height: 1.6;
+  padding: 1rem;
 }
 
 .description.collapsed {
@@ -144,7 +142,6 @@ img:not(.loaded) {
   max-height: 3.5em;
 }
 
-/* Thumbnail navigation */
 .thumbnails {
   display: flex;
   overflow-x: auto;
@@ -152,11 +149,11 @@ img:not(.loaded) {
   padding: 0.5rem;
   scroll-behavior: smooth;
   justify-content: center;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
 }
 
 .thumbnails::-webkit-scrollbar {
-  display: none; /* Chrome */
+  display: none;
 }
 
 .thumbnails img {
@@ -173,10 +170,9 @@ img:not(.loaded) {
   opacity: 1;
   transform: scale(1.05);
   border: 2px solid #0077ff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 8px rgba(0, 119, 255, 0.4);
 }
 
-/* Close button */
 .close-btn {
   position: absolute;
   top: 4px;
@@ -187,26 +183,25 @@ img:not(.loaded) {
   cursor: pointer;
   color: #333;
   z-index: 1001;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .close-btn:hover {
   color: #ff0000;
+  transform: scale(1.1);
 }
 
-/* Animation for modal entrance */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-/* External link button */
+@keyframes fadeOut {
+  from   { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+
 .external-link {
   text-align: center;
   margin-top: 0.5rem;
@@ -228,7 +223,6 @@ img:not(.loaded) {
   background-color: #005ecc;
 }
 
-/* Modal header */
 .modal-header {
   text-align: center;
   padding: 0.5rem 1rem;
@@ -237,18 +231,19 @@ img:not(.loaded) {
   align-self: center;
 }
 
-.spot-title {  
+.spot-title {
   margin: 0;
   font-size: 1.5rem;
   font-weight: bold;
   color: #424242;
+  letter-spacing: 0.2px;
 }
 
 .spot-date {
   margin: 0;
   padding: 5px;
   font-size: 0.9rem;
-  color: #666;
+  color: #777;
 }
 
 .share-btn {
@@ -259,11 +254,12 @@ img:not(.loaded) {
   font-size: 1.2rem;
   vertical-align: middle;
   color: #0077ff;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .share-btn:hover {
   color: #005ecc;
+  transform: scale(1.1);
 }
 
 .toast {
@@ -301,13 +297,10 @@ img:not(.loaded) {
   }
 }
 
-
 @media (max-width: 768px) {
-  /* Your mobile-only styles here */
-
   .modal {
     width: 88vw;
-    height: 90vh;
+    height: 90dvh;
     border-radius: 12px;
     padding: 1rem;
   }
