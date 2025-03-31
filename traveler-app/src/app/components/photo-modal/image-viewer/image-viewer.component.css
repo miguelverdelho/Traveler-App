@@ -1,14 +1,15 @@
 .image-area {
     position: relative;
     width: 100%;
-    max-width: 700px;
-    height: 500px;
+    height: 50dvh; /* ✅ dynamically fits screen */
+    max-height: 400px; /* Optional cap for desktop */
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
   }
+  
   
   .image-area a {
     display: flex;
