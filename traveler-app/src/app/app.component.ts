@@ -3,10 +3,11 @@ import * as L from 'leaflet';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { PhotoModalComponent } from './components/photo-modal/photo-modal.component';
-import { LoginComponent } from './components/login/login.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 interface TravelSpot {
+  id: string;
   lat: number;
   lng: number;
   title: string;
@@ -27,17 +28,20 @@ const redPinIcon = L.icon({
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, PhotoModalComponent,LoginComponent],
+  imports: [CommonModule, PhotoModalComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  spots: TravelSpot[] = []; // ✅ Store loaded spots here
+
   private map!: L.Map;
   selectedPhoto: string = '';
   selectedDescription: string = '';
   selectedLink: string = '';
   showModal: boolean = false;
   selectedPhotos: string[] = [];
+  selectedSpotId: string = '';
 
   isAuthenticated = false;
   selectedTitle: string = '';
@@ -52,13 +56,30 @@ export class AppComponent implements OnInit {
     });
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     //remove when login active
 
     this.initMap();
     this.loadSpots();
+
+    this.route.queryParams.subscribe(params => {
+      const spotId = params['spot'];
+      if (spotId) {
+        // Wait until spots are loaded before opening modal
+        setTimeout(() => {
+          const target = this.spots.find(s => s.id === spotId);
+          if (target) {
+            this.openSpot(target); // Extract the modal opening logic into a method
+          }
+        }, 500);
+      }
+    });
   }
 
   private initMap(): void {
@@ -88,28 +109,53 @@ export class AppComponent implements OnInit {
 
   closeModal() {
     this.showModal = false;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { spot: null },
+      queryParamsHandling: 'merge'
+    });
   }
 
   private loadSpots(): void {
     this.http.get<any>('https://traveler-cms.vercel.app/api/travel-spots?limit=1000').subscribe(response => {
       const spots: TravelSpot[] = response.docs;
-  
-      spots.forEach(spot => {
-        
+      this.spots = spots;
+      spots.forEach(spot => {        
         L.marker([spot.lat, spot.lng], { icon: redPinIcon })
           .addTo(this.map)
           .bindTooltip(spot.title, { permanent: false, direction: 'top' })
-          .on('click', () => {
-            this.selectedPhotos = spot.photos || [];            
-            this.selectedTitle = spot.title;
-            this.selectedDescription = spot.description;
-            this.selectedDate = spot.date || 'No date provided';
-            this.selectedLink = spot.link || '';
-            this.showModal = true;
-            
-          });
+          .on('click', () => this.openSpot(spot));          
       });
+
+       // ✅ Try to open spot from URL again (after data is ready)
+       const spotId = this.route.snapshot.queryParamMap.get('spot');
+       if (spotId) {
+         const target = spots.find(s => s.id === spotId);
+         if (target) this.openSpot(target);
+       }
     });
   }
   
+  private openSpot(spot: TravelSpot): void {
+    this.selectedPhotos = spot.photos || [];
+    this.selectedTitle = spot.title;
+    this.selectedDescription = spot.description;
+    this.selectedDate = spot.date || 'No date provided';
+    this.selectedLink = spot.link || '';
+    this.selectedSpotId = spot.id;
+    this.showModal = true;
+
+    if (this.map) {
+      this.map.setView([spot.lat, spot.lng], 8, {
+        animate: true,
+        duration: 0.5
+      });
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { spot: spot.id },
+      queryParamsHandling: 'merge'
+    });
+  }
 }

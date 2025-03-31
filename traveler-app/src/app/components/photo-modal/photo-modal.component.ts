@@ -19,9 +19,11 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
   @Input() date!: string;
   @Input() isVisible: boolean = false;
   @Output() onClose = new EventEmitter<void>();
+  @Input() spotId!: string;
 
   currentIndex: number = 0;
   lightbox?: PhotoSwipeLightbox;
+  copied: boolean = false;
 
   @ViewChild('galleryContainer', { static: false }) galleryContainer!: ElementRef;
   @HostListener('document:keydown', ['$event'])
@@ -49,6 +51,8 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
     this.lightbox = new PhotoSwipeLightbox({
       gallery: '.image-area',
       children: 'a',
+      closeOnVerticalDrag: true,
+      bgOpacity: 0.9,
       pswpModule: () => import('photoswipe')
     });
     this.lightbox.init();
@@ -78,6 +82,18 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
     }
 
     this.lightbox?.loadAndOpen(this.currentIndex);
+  }
+  
+  copyShareUrl(): void {
+    const url = new URL(window.location.href);
+    url.searchParams.set('spot', this.spotId);
+    navigator.clipboard.writeText(url.toString()).then(() => {
+      this.copied = true;
+
+      setTimeout(() => {
+        this.copied = false;
+      }, 2000);
+    });
   }
   
 }

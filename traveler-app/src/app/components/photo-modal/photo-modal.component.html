@@ -55,6 +55,12 @@
       <a [href]="link" target="_blank" rel="noopener">
         🌐 Cadernos de Viagem
       </a>
+      <button class="share-btn" (click)="copyShareUrl()" title="Copy link to clipboard">
+        🔗
+      </button>
+      <div class="toast" *ngIf="copied">
+        ✅ Link copiado para o seu clipboard.
+      </div>
     </div>
 
     <button class="close-btn" (click)="onClose.emit()">×</button>

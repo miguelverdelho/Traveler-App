@@ -28,8 +28,9 @@
             "styles": [
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles.css",
-              "node_modules/photoswipe/style.css",
-              "node_modules/photoswipe/dist/photoswipe.css"
+              "photoswipe/style.css",
+              "photoswipe/dist/photoswipe.css"
+
             ],
             "scripts": []
           },
