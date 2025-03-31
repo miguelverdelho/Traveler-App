@@ -1,80 +1,32 @@
 <div class="overlay" *ngIf="isVisible" (click)="onClose.emit()">
   <div class="modal" (click)="$event.stopPropagation()">
-    
-    <!-- 🆕 Title + Date Header -->
-    <div class="modal-header">
-      <h2 class="spot-title">{{ title }}</h2>
-      <p class="spot-date">{{ date | date: 'longDate' }}</p>
-    </div>
 
-    <!-- Image area with navigation -->
-    <div class="image-area">
-      <button
-      class="nav prev"
-      *ngIf="photos.length > 1"
-      (click)="prev()"
-    >
-      &#10094;
-    </button>
-  
-    <div class="image-wrapper">
-      <div *ngIf="!imageLoaded" class="image-loader">
-        <img src="assets/spinner.gif" alt="Loading..." />
-      </div>
-  
-      <a 
-        *ngIf="currentPhoto"
-        [href]="currentPhoto"
-        data-pswp-width="1600"
-        data-pswp-height="1200"
-        (click)="openGallery($event)"
-      >
-        <img
-          [src]="currentPhoto"
-          alt="Photo"
-          (load)="onImageLoad()"
-          [class.loaded]="imageLoaded"
-        />
-      </a>
-    </div>
-  
-    <button
-      class="nav next"
-      *ngIf="photos.length > 1"
-      (click)="next()"
-    >
-      &#10095;
-    </button>
-    </div>
-    <div class="thumbnails">
-      <img
-        *ngFor="let photo of photos; let i = index"
-        [src]="photo"
-        [class.active]="i === currentIndex"
-        (click)="goTo(i)"
-      />
-    </div>
-    
-    
-    <div
-      class="description"
-      [class.collapsed]="true"
-    >
-      <div [innerHTML]="description"></div>
-    </div>
-    
-    <div class="external-link" *ngIf="link">
-      <a [href]="link" target="_blank" rel="noopener">
-        🌐 Cadernos de Viagem
-      </a>
-      <button class="share-btn" (click)="copyShareUrl()" title="Copy link to clipboard">
-        🔗
-      </button>
-      <div class="toast" *ngIf="copied">
-        ✅ Link copiado para o seu clipboard.
-      </div>
-    </div>
+    <app-modal-header [title]="title" [date]="date" />
 
-    <button class="close-btn" (click)="onClose.emit()">×</button>
+    <app-image-viewer
+      [currentPhoto]="currentPhoto"
+      [imageLoaded]="imageLoaded"
+      [hasNav]="photos.length > 1"
+      (imageLoadedEvent)="onImageLoad()"
+      (openGallery)="openGallery($event)"
+      (prev)="prev()"
+      (next)="next()"
+    />
+
+    <app-thumbnail-carousel
+      [photos]="photos"
+      [currentIndex]="currentIndex"
+      (goTo)="goTo($event)"
+    />
+
+    <app-description [html]="description" />
+
+    <app-external-link
+      [link]="link"
+      [spotId]="spotId"
+    />
+
+    <app-close-button (click)="onClose.emit()" />
+
   </div>
 </div>

@@ -1,0 +1,88 @@
+.image-area {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    height: 500px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .image-area a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .image-area img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+  
+  .image-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+  
+  .image-loader {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  
+  .image-loader img {
+    width: 52px;
+    height: 52px;
+    opacity: 0.8;
+  }
+  
+  img.loaded {
+    transition: opacity 0.3s ease-in;
+    opacity: 1;
+  }
+  
+  img:not(.loaded) {
+    opacity: 0;
+  }
+  
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    background: transparent;
+    color: lightgray;
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 10;
+    opacity: 0.95;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .nav:hover {
+    color: darkgray;
+  }
+  
+  .nav.prev {
+    left: -15px;
+  }
+  
+  .nav.next {
+    right: -15px;
+  }
+  

@@ -1,13 +1,31 @@
-import { Component, Input, Output, EventEmitter, AfterViewInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter,
+  AfterViewInit, OnDestroy, HostListener
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HostListener } from '@angular/core';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import 'photoswipe/style.css';
+
+// Subcomponents
+import { ModalHeaderComponent } from './modal-header/modal-header.component';
+import { ImageViewerComponent } from './image-viewer/image-viewer.component';
+import { ThumbnailCarouselComponent } from './thumbnail-carousel/thumbnail-carousel.component';
+import { DescriptionComponent } from './description/description.component';
+import { ExternalLinkComponent } from './external-link/external-link.component';
+import { CloseButtonComponent } from './close-button/close-button.component';
 
 @Component({
   selector: 'app-photo-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ModalHeaderComponent,
+    ImageViewerComponent,
+    ThumbnailCarouselComponent,
+    DescriptionComponent,
+    ExternalLinkComponent,
+    CloseButtonComponent
+  ],
   templateUrl: './photo-modal.component.html',
   styleUrls: ['./photo-modal.component.css']
 })
@@ -18,20 +36,21 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
   @Input() title!: string;
   @Input() date!: string;
   @Input() isVisible: boolean = false;
-  @Output() onClose = new EventEmitter<void>();
   @Input() spotId!: string;
+  @Output() onClose = new EventEmitter<void>();
 
   currentIndex: number = 0;
   imageLoaded: boolean = false;
   lightbox?: PhotoSwipeLightbox;
-  copied: boolean = false;
 
-  @ViewChild('galleryContainer', { static: false }) galleryContainer!: ElementRef;
-  @ViewChild('thumbnailContainer') thumbnailContainerRef!: ElementRef;
+  get currentPhoto(): string {
+    return this.photos[this.currentIndex];
+  }
+
   @HostListener('document:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
     if (!this.isVisible) return;
-  
+
     switch (event.key) {
       case 'ArrowRight':
         this.next();
@@ -40,21 +59,17 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
         this.prev();
         break;
       case 'Escape':
-        this.onClose.emit(); // optional: allow ESC to close modal
+        this.onClose.emit();
         break;
     }
-  }
-
-  get currentPhoto(): string {
-    return this.photos[this.currentIndex];
   }
 
   ngAfterViewInit(): void {
     this.lightbox = new PhotoSwipeLightbox({
       gallery: '.image-area',
       children: 'a',
-      closeOnVerticalDrag: true,
       bgOpacity: 0.9,
+      closeOnVerticalDrag: true,
       pswpModule: () => import('photoswipe')
     });
     this.lightbox.init();
@@ -74,9 +89,9 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
 
   goTo(index: number): void {
     this.currentIndex = index;
-    this.imageLoaded = false; // reset until new image loads
+    this.imageLoaded = false;
   }
-  
+
   onImageLoad(): void {
     this.imageLoaded = true;
   }
@@ -90,17 +105,4 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
 
     this.lightbox?.loadAndOpen(this.currentIndex);
   }
-  
-  copyShareUrl(): void {
-    const url = new URL(window.location.href);
-    url.searchParams.set('spot', this.spotId);
-    navigator.clipboard.writeText(url.toString()).then(() => {
-      this.copied = true;
-
-      setTimeout(() => {
-        this.copied = false;
-      }, 2000);
-    });
-  }
- 
 }

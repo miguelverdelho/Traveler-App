@@ -1,0 +1,23 @@
+.description {
+    text-align: center;
+    font-size: 0.8rem;
+    width: 70%;
+    align-self: center;
+    color: #333;
+    position: relative;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 500px;
+    line-height: 1.6;
+    padding: 1rem;
+  }
+  
+  .description.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 3.5em;
+  }
+  

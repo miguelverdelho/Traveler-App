@@ -1,0 +1,21 @@
+<div class="image-area">
+    <button *ngIf="hasNav" class="nav prev" (click)="prev.emit()">&#10094;</button>
+  
+    <div class="image-wrapper">
+      <div *ngIf="!imageLoaded" class="image-loader">
+        <img src="assets/spinner.gif" alt="Loading..." />
+      </div>
+  
+      <a *ngIf="currentPhoto"
+         [href]="currentPhoto"
+         (click)="openGallery.emit($event)">
+        <img [src]="currentPhoto"
+             [class.loaded]="imageLoaded"
+             (load)="imageLoadedEvent.emit()"
+             alt="Photo" />
+      </a>
+    </div>
+  
+    <button *ngIf="hasNav" class="nav next" (click)="next.emit()">&#10095;</button>
+  </div>
+  

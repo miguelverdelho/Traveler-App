@@ -1,0 +1,7 @@
+<div class="thumbnails">
+    <img *ngFor="let photo of photos; let i = index"
+         [src]="photo"
+         [class.active]="i === currentIndex"
+         (click)="goTo.emit(i)" />
+  </div>
+  

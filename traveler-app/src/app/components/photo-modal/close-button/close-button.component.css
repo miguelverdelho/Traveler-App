@@ -1,0 +1,18 @@
+.close-btn {
+    position: absolute;
+    top: 4px;
+    right: 7px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    z-index: 1001;
+    transition: color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .close-btn:hover {
+    color: #ff0000;
+    transform: scale(1.1);
+  }
+  
