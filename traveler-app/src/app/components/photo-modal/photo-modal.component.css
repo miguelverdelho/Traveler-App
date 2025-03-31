@@ -38,3 +38,18 @@
   from { opacity: 1; transform: scale(1); }
   to   { opacity: 0; transform: scale(0.95); }
 }
+
+@media (max-width: 768px) {
+  .modal {
+    width: 88vw;
+    height: 90dvh;
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .image-area img {
+    max-width: 100%;
+    max-height: 60vh;
+  }
+
+}
