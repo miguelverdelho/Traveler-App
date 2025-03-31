@@ -26,6 +26,7 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
   copied: boolean = false;
 
   @ViewChild('galleryContainer', { static: false }) galleryContainer!: ElementRef;
+  @ViewChild('thumbnailContainer') thumbnailContainerRef!: ElementRef;
   @HostListener('document:keydown', ['$event'])
   handleKeydown(event: KeyboardEvent): void {
     if (!this.isVisible) return;
@@ -95,5 +96,5 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
       }, 2000);
     });
   }
-  
+ 
 }
