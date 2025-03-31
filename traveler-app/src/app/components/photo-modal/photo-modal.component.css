@@ -59,6 +59,39 @@
   transition: opacity 0.3s ease;
 }
 
+.image-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-loader {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.image-loader img {
+  width: 52px;
+  height: 52px;
+  opacity: 0.8;
+}
+
+
+img.loaded {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
+}
+
+img:not(.loaded) {
+  opacity: 0;
+}
+
+
 
 /* Navigation buttons */
 .nav {
@@ -273,7 +306,7 @@
   /* Your mobile-only styles here */
 
   .modal {
-    width: 95vw;
+    width: 88vw;
     height: 90vh;
     border-radius: 12px;
     padding: 1rem;

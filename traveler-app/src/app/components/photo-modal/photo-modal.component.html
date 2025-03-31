@@ -10,29 +10,41 @@
     <!-- Image area with navigation -->
     <div class="image-area">
       <button
-        class="nav prev"
-        *ngIf="photos.length > 1"
-        (click)="prev()"
-      >
-        &#10094;
-      </button>
-    
+      class="nav prev"
+      *ngIf="photos.length > 1"
+      (click)="prev()"
+    >
+      &#10094;
+    </button>
+  
+    <div class="image-wrapper">
+      <div *ngIf="!imageLoaded" class="image-loader">
+        <img src="assets/spinner.gif" alt="Loading..." />
+      </div>
+  
       <a 
-        href="{{currentPhoto}}" 
-        data-pswp-width="1600" 
-        data-pswp-height="1200" 
+        *ngIf="currentPhoto"
+        [href]="currentPhoto"
+        data-pswp-width="1600"
+        data-pswp-height="1200"
         (click)="openGallery($event)"
       >
-        <img [src]="currentPhoto" alt="Photo" />
+        <img
+          [src]="currentPhoto"
+          alt="Photo"
+          (load)="onImageLoad()"
+          [class.loaded]="imageLoaded"
+        />
       </a>
-    
-      <button
-        class="nav next"
-        *ngIf="photos.length > 1"
-        (click)="next()"
-      >
-        &#10095;
-      </button>
+    </div>
+  
+    <button
+      class="nav next"
+      *ngIf="photos.length > 1"
+      (click)="next()"
+    >
+      &#10095;
+    </button>
     </div>
     <div class="thumbnails">
       <img

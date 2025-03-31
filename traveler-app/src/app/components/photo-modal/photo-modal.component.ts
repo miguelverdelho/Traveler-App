@@ -22,6 +22,7 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
   @Input() spotId!: string;
 
   currentIndex: number = 0;
+  imageLoaded: boolean = false;
   lightbox?: PhotoSwipeLightbox;
   copied: boolean = false;
 
@@ -73,6 +74,11 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
 
   goTo(index: number): void {
     this.currentIndex = index;
+    this.imageLoaded = false; // reset until new image loads
+  }
+  
+  onImageLoad(): void {
+    this.imageLoaded = true;
   }
 
   openGallery(event: Event): void {
