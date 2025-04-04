@@ -33,7 +33,8 @@ const redPinIcon = L.icon({
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  spots: TravelSpot[] = []; // ✅ Store loaded spots here
+  spots: TravelSpot[] = [];
+  loadingSpots = true;
 
   private map!: L.Map;
   selectedPhoto: string = '';
@@ -117,6 +118,9 @@ export class AppComponent implements OnInit {
   }
 
   private loadSpots(): void {
+    this.loadingSpots = true; 
+    console.log(this.loadingSpots);
+
     this.http.get<any>('https://traveler-cms.vercel.app/api/travel-spots?limit=1000').subscribe(response => {
       const spots: TravelSpot[] = response.docs;
       this.spots = spots;
@@ -127,13 +131,18 @@ export class AppComponent implements OnInit {
           .on('click', () => this.openSpot(spot));          
       });
 
-       // ✅ Try to open spot from URL again (after data is ready)
-       const spotId = this.route.snapshot.queryParamMap.get('spot');
+      this.tryOpenSpotFromUrl(spots);
+    });
+
+    this.loadingSpots = false; 
+  }
+
+  private tryOpenSpotFromUrl(spots: TravelSpot[]): void {
+    const spotId = this.route.snapshot.queryParamMap.get('spot');
        if (spotId) {
          const target = spots.find(s => s.id === spotId);
          if (target) this.openSpot(target);
        }
-    });
   }
   
   private openSpot(spot: TravelSpot): void {

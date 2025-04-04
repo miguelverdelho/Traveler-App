@@ -44,7 +44,6 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
   lightbox?: PhotoSwipeLightbox;
 
   ngOnInit(): void {
-    console.log(this.currentIndex);
     this.currentIndex = 0;
   }
 
