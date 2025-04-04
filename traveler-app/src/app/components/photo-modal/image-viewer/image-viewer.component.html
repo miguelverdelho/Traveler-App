@@ -8,12 +8,14 @@
   
       <a *ngIf="currentPhoto"
          [href]="currentPhoto"
+         data-pswp-width="1600"
+         data-pswp-height="1200"
          (click)="openGallery.emit($event)">
+        </a>
         <img [src]="currentPhoto"
              [class.loaded]="imageLoaded"
              (load)="imageLoadedEvent.emit()"
              alt="Photo" />
-      </a>
     </div>
   
     <button *ngIf="hasNav" class="nav next" (click)="next.emit()">&#10095;</button>

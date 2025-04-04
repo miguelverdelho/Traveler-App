@@ -146,10 +146,14 @@ export class AppComponent implements OnInit {
     this.showModal = true;
 
     if (this.map) {
-      this.map.setView([spot.lat, spot.lng], 5, {
-        animate: true,
-        duration: 0.5
-      });
+      this.map.setView(
+        [spot.lat, spot.lng], 
+        8, 
+        {
+          animate: true,
+          duration: 0.5
+        }
+    );
     }
 
     this.router.navigate([], {

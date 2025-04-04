@@ -43,6 +43,11 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
   imageLoaded: boolean = false;
   lightbox?: PhotoSwipeLightbox;
 
+  ngOnInit(): void {
+    console.log(this.currentIndex);
+    this.currentIndex = 0;
+  }
+
   get currentPhoto(): string {
     return this.photos[this.currentIndex];
   }
@@ -72,6 +77,7 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
       closeOnVerticalDrag: true,
       pswpModule: () => import('photoswipe')
     });
+
     this.lightbox.init();
   }
 
@@ -98,11 +104,17 @@ export class PhotoModalComponent implements AfterViewInit, OnDestroy {
 
   openGallery(event: Event): void {
     event.preventDefault();
-
-    if (this.lightbox?.pswp) {
-      this.lightbox.pswp.close();
-    }
-
-    this.lightbox?.loadAndOpen(this.currentIndex);
+  
+    if (!this.lightbox) return;
+  
+    const galleryItems = this.photos.map(photo => ({
+      src: photo,
+      width: 1600,   // or detect dynamically
+      height: 1200
+    }));
+  
+    // Create a custom gallery
+    this.lightbox.pswp?.close(); // close if already open
+    this.lightbox?.loadAndOpen(this.currentIndex,  galleryItems );
   }
 }
